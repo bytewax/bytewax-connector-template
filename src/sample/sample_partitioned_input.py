@@ -1,9 +1,9 @@
-from typing import Set
+from typing import Any, Set
 
 from bytewax.inputs import PartitionedInput, StatefulSource
 
 
-class _SampleSource(StatefulSource):
+class _PartitionedSource(StatefulSource):
     """Sample class implementing a Bytewax StatefulSource.
 
     Stateful sources of input should be able to replay input items in
@@ -22,7 +22,7 @@ class _SampleSource(StatefulSource):
         """
         pass
 
-    def next(self) -> list[any]:
+    def next(self) -> list[Any]:
         """Return the next batch of items from the input.
 
         This method should return a list of items from the input
@@ -32,10 +32,10 @@ class _SampleSource(StatefulSource):
         source represents.
 
         If possible, you should emit the list of items to be processed
-        as (key[str], value[any]) tuples.
+        as (key[str], value[Any]) tuples.
 
         An important thing to note here is that StatefulSource.next
-        must never block. The Bytewax runtime employs a sort of
+        must never block. The Bytewax runtime employs a type of
         cooperative multitasking, and so each operator must return
         quickly, even if it has nothing to do, so other operators in
         the dataflow that do have work can run.
@@ -93,7 +93,7 @@ class SampleInput(PartitionedInput):
         """
         pass
 
-    def build_part(self, for_part, resume_state) -> _SampleSource:
+    def build_part(self, for_part, resume_state) -> _PartitionedSource:
         """Build and return a single instance of a StatefulSource
 
         This function is called for you by Bytewax with the results of
