@@ -34,9 +34,16 @@ This project comes with an example `test` directory that uses
 Included in this project are GitHub actions that will build and publish your
 package to [PyPI](https://pypi.org/).
 
+Publishing to PyPI using the GitHub Action configured here uses their
+[Trusted Publishing](https://docs.pypi.org/trusted-publishers/)
+framework. See the docs for configuring your project on PyPI.
+
 ## Building a connector for Bytewax
 
-Included in this project is a skeleton implementation of [PartitionedInput](https://bytewax.io/apidocs/bytewax.inputs#bytewax.inputs.PartitionedInput) and [DynamicInput](https://bytewax.io/apidocs/bytewax.inputs#bytewax.inputs.DynamicInput).
+Included in this project is a skeleton implementation of
+[PartitionedInput](https://bytewax.io/apidocs/bytewax.inputs#bytewax.inputs.PartitionedInput)
+and
+[DynamicInput](https://bytewax.io/apidocs/bytewax.inputs#bytewax.inputs.DynamicInput).
 
 ## Important things to keep in mind when building input connectors
 
