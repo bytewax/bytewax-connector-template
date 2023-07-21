@@ -38,6 +38,14 @@ Publishing to PyPI using the GitHub Action configured here uses their
 [Trusted Publishing](https://docs.pypi.org/trusted-publishers/)
 framework. See the docs for configuring your project on PyPI.
 
+### Documentation
+
+This project contains a GitHub action for building and publishing
+documentation to GitHub Pages using
+[Sphinx](https://www.sphinx-doc.org/en/master/).
+
+To view the documentation locally, run `make html` from the `docs/` folder.
+
 ## Building a connector for Bytewax
 
 Included in this project is a skeleton implementation of
