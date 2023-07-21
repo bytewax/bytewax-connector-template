@@ -5,6 +5,16 @@ Welcome to bytewax-connector-template documentation!
    :maxdepth: 2
    :caption: Contents:
 
+Installation
+------------
+
+Installing with pip:
+
+.. code-block:: console
+
+   (.venv) $ pip install bytewax-connector
+
+
 
 Indices and tables
 ==================
