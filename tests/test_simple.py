@@ -1,12 +1,21 @@
-import unittest
-
-# from sample.sample_input_connector import SampleInput
-
-
-class TestSimple(unittest.TestCase):
-    def test_add_one(self):
-        self.assertEqual(5 + 1, 6)
+from bytewax.dataflow import Dataflow
+from bytewax.testing import run_main, TestingInput, TestingOutput
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_map():
+    flow = Dataflow()
+
+    inp = [0, 1, 2]
+    flow.input("inp", TestingInput(inp))
+
+    def add_one(item):
+        return item + 1
+
+    flow.map(add_one)
+
+    out = []
+    flow.output("out", TestingOutput(out))
+
+    run_main(flow)
+
+    assert sorted(out) == sorted([1, 2, 3])
