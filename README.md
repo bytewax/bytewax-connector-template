@@ -20,7 +20,7 @@ For a completed example that uses this template, see [https://github.com/bytewax
 ### Development
 
 This template includes an optional set of development dependencies which can be
-installed with `pip install .[dev]`.
+installed with `pip install .[dev]`. _If you get an error using `zsh` you may need to quote the path like this - `pip install '.[dev]'`_
 
 This template also contains a configuration for using
 [pre-commit](https://pre-commit.com/) hooks. You can install the pre-commit
