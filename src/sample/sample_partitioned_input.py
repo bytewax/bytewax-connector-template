@@ -1,4 +1,4 @@
-from typing import Any, Set
+from typing import Any
 
 from bytewax.inputs import PartitionedInput, StatefulSource
 
@@ -18,7 +18,8 @@ class _PartitionedSource(StatefulSource):
 
         Args:
 
-            resume_state: The last completed snapshot for this source.
+            resume_state:
+                The last completed snapshot for this source.
         """
         pass
 
@@ -79,31 +80,41 @@ class SampleInput(PartitionedInput):
 
     Fully recoverable Dataflows require the ability to replay data
     from the past.
+
+    Each partition must contain unique data. If you re-read the same data
+    in multiple partitions, the dataflow will process these duplicate
+    items.
     """
 
     def __init__(self):
         pass
 
-    def list_parts(self) -> Set[str]:
+    def list_parts(self) -> list[str]:
         """List all of the parts or partitions for this input source.
 
-        This method should return the set of all possible partitions for
-        this source. Bytewax will then call `build_part` for each of
-        those, along with the recovery state for that part (if any).
+        This method should return the list of partitions available
+        for this worker. You do not need to list all partitions globally.
         """
         pass
 
     def build_part(self, for_part, resume_state) -> _PartitionedSource:
         """Build and return a single instance of a StatefulSource
 
-        This function is called for you by Bytewax with the results of
-        the last completed snapshot as the `resume_state` parameter during
-        the recovery process.
+        Will be called once per execution for each partition key on a
+        worker that reported that partition was local in `list_parts`.
+
+        Do not pre-build state about a partition in the
+        constructor. All state must be derived from `resume_state` for
+        recovery to work properly.
 
         Args:
 
-            for_part: Which part to build a `SampleSource` for.
+            for_part:
+                Which part to build a `SampleSource` for.
+                Will always be one of the keys returned by `list_parts`
+                on this worker.
 
-            resume_state: The last completed snapshot for this source.
+            resume_state:
+                The last completed snapshot for this source.
         """
         pass
