@@ -102,7 +102,7 @@ classifiers = [  # Optional
 # For an analysis of this field vs pip's requirements files see:
 # https://packaging.python.org/discussions/install-requires-vs-requirements/
 dependencies = [
-  "bytewax==0.17.1"
+  "bytewax==0.17.2"
 ]
 
 # List additional groups of dependencies here (e.g. development
