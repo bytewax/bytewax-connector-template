@@ -1,12 +1,13 @@
-from typing import Any
+from datetime import datetime
+from typing import Any, Iterable, List, Optional
 
-from bytewax.inputs import PartitionedInput, StatefulSource
+from bytewax.inputs import FixedPartitionedSource, StatefulSourcePartition
 
 
-class _PartitionedSource(StatefulSource):
-    """Sample class implementing a Bytewax StatefulSource.
+class _SampleSourcePartition(StatefulSourcePartition):
+    """Sample class implementing a Bytewax StatefulSourcePartition.
 
-    Stateful sources of input should be able to replay input items in
+    Stateful partitions of input should be able to replay input items in
     the same order from the instant of the most recent snapshot. This
     will cause the state and output of the dataflow to evolve in the
     same way during the resume execution as during the previous
@@ -23,7 +24,7 @@ class _PartitionedSource(StatefulSource):
         """
         pass
 
-    def next(self) -> list[Any]:
+    def next_batch(self, sched: Optional[datetime]) -> Iterable[Any]:
         """Return the next batch of items from the input.
 
         This method should return a list of items from the input
@@ -59,8 +60,8 @@ class _PartitionedSource(StatefulSource):
         pass
 
 
-class SampleInput(PartitionedInput):
-    """Sample class implementing `PartitionedInput`
+class SamplePartitionedSource(FixedPartitionedSource):
+    """Sample class implementing `FixedPartitionedSource`
 
     A partition is a "sub-stream" of data that can be read
     concurrently and independently. As an example, a Kafka topic is
@@ -89,15 +90,24 @@ class SampleInput(PartitionedInput):
     def __init__(self):
         pass
 
-    def list_parts(self) -> list[str]:
+    def list_parts(self) -> List[str]:
         """List all of the parts or partitions for this input source.
 
         This method should return the list of partitions available
         for this worker. You do not need to list all partitions globally.
+
+        Returns:
+            Local partition keys.
+
         """
         pass
 
-    def build_part(self, for_part, resume_state) -> _PartitionedSource:
+    def build_part(
+        self,
+        now: datetime,
+        for_part: str,
+        resume_state: Optional[Any],
+    ) -> _SampleSourcePartition:
         """Build and return a single instance of a StatefulSource
 
         Will be called once per execution for each partition key on a
@@ -108,13 +118,17 @@ class SampleInput(PartitionedInput):
         recovery to work properly.
 
         Args:
+            now: The current time.
 
-            for_part:
-                Which part to build a `SampleSource` for.
-                Will always be one of the keys returned by `list_parts`
-                on this worker.
+            for_part: Which partition to build. Will always be one of
+                the keys returned by `list_parts` on this worker.
 
-            resume_state:
-                The last completed snapshot for this source.
+            resume_state: State data containing where in the input
+                stream this partition should be begin reading during
+                this execution.
+
+        Returns:
+            The built partition.
+
         """
         pass

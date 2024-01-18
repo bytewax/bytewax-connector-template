@@ -102,7 +102,7 @@ classifiers = [  # Optional
 # For an analysis of this field vs pip's requirements files see:
 # https://packaging.python.org/discussions/install-requires-vs-requirements/
 dependencies = [
-  "bytewax==0.17.1"
+  "bytewax>=0.18,<0.19"
 ]
 
 # List additional groups of dependencies here (e.g. development
@@ -115,12 +115,11 @@ dependencies = [
 # projects.
 [project.optional-dependencies] # Optional
 dev = [
-    "check-manifest==0.49",
-    "black==23.3.0",    
-    "pre-commit>=2.19.0",
-    "pytest==7.4.0",
-    "tox==4.6.3",
-    "sphinx<7",
+    "check-manifest~=0.49",
+    "pre-commit~=2.19.0",
+    "pytest~=7.4",
+    "tox~=4.6",
+    "sphinx~=7.2",
     "sphinx-rtd-theme"
 ]
 

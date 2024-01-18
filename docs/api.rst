@@ -2,4 +2,4 @@ API
 ===
 
 .. automodule:: bytewax-sample-connector
-   :members: SampleInput
+   :members: SamplePartitionedSource, SampleDynamicSource
